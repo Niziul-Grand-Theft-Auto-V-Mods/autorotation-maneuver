@@ -9,6 +9,8 @@ namespace Autorotation_maneuver.user_interface
 {
     internal sealed class HelicopterBladesSpeed : Script
     {
+        private Elements _elements;
+
         public HelicopterBladesSpeed()
         {
             var settings
@@ -20,9 +22,6 @@ namespace Autorotation_maneuver.user_interface
 
             if (!interfaceVisibility)
                 Pause();
-
-            var elements 
-                = ReturnTheRequiredElementsForDisplayingTheInterface();
 
             var isToBeDisplayedOnlyInAutorotation
                 = settings
@@ -63,20 +62,43 @@ namespace Autorotation_maneuver.user_interface
                                         .CurrentVehicle;
 
                                 if (isToBeDisplayedOnlyInAutorotation 
-                                    && 
+                                    &&
                                     currentVehicle
-                                        .IsEngineRunning 
-                                    || 
+                                        .IsEngineRunning
+                                    ||
                                     currentVehicle
-                                        .HeliBladesSpeed == 0.0f)
+                                        .IsStopped
+                                    ||
+                                    !currentVehicle
+                                        .IsInAir
+                                    ||
+                                    character
+                                        .IsJumpingOutOfVehicle
+                                    ||
+                                    character
+                                        .IsGettingIntoVehicle
+                                    ||
+                                    !character
+                                        .IsSittingInVehicle()
+                                    )
                                 {
                                     return;
                                 }
 
-                                elements
+                                if (_elements == null)
+                                    _elements 
+                                            = ReturnTheRequiredElementsForDisplayingTheInterface();
+
+                                _elements
                                     .ScaledDraw((currentVehicle.HeliBladesSpeed * 100f)
                                                                                     .ToString("N1"));
+
+                                return;
                             }
+
+                            if (_elements != null)
+                                _elements 
+                                        = null;
                         }
                         return;
                 }
