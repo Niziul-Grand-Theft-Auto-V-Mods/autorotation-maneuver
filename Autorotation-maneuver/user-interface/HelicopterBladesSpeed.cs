@@ -21,10 +21,12 @@ namespace Autorotation_maneuver.user_interface
             if (!interfaceVisibility)
                 Pause();
 
-            
-
             var elements 
                 = ReturnTheRequiredElementsForDisplayingTheInterface();
+
+            var isToBeDisplayedOnlyInAutorotation
+                = settings
+                    .ReturnTheInterfaceDisplayBehavior();
 
             var isInLoading
                 = Game
@@ -52,7 +54,7 @@ namespace Autorotation_maneuver.user_interface
 
                             var playerIsInVehicleWithRotatingWings
                                 = character
-                                    .IsInHeli;
+                                        .IsInHeli;
 
                             if (playerIsInVehicleWithRotatingWings)
                             {
@@ -60,13 +62,20 @@ namespace Autorotation_maneuver.user_interface
                                     = character
                                         .CurrentVehicle;
 
-                                var helicopterBladesSpeed
-                                    = currentVehicle
-                                        .HeliBladesSpeed;
+                                if (isToBeDisplayedOnlyInAutorotation 
+                                    && 
+                                    currentVehicle
+                                        .IsEngineRunning 
+                                    || 
+                                    currentVehicle
+                                        .HeliBladesSpeed == 0.0f)
+                                {
+                                    return;
+                                }
 
                                 elements
-                                    .ScaledDraw((helicopterBladesSpeed * 100f)
-                                                                            .ToString("N1"));
+                                    .ScaledDraw((currentVehicle.HeliBladesSpeed * 100f)
+                                                                                    .ToString("N1"));
                             }
                         }
                         return;
