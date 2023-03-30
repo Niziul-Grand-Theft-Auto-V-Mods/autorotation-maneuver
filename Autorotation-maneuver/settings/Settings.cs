@@ -1,8 +1,12 @@
 ﻿using GTA;
-using GTA.UI;
+
+using GTAScreen
+      = GTA.UI.Screen;
 
 using System;
+
 using System.IO;
+
 using System.Drawing;
 
 
@@ -117,27 +121,9 @@ namespace Autorotation_maneuver.settings
 
         internal PointF ReturnThePositionOfCenterOfScreen()
         {
-            var displayCompatibility 
-                = ScriptSettings
-                    .Load(PathToDisplayCompatibilityFile);
-
-            var aspectRatio 
-                = Screen
-                    .AspectRatio;
-
-            var screenCompatibility 
-                = displayCompatibility
-                    .GetAllValues<string>(section: "Compatibility",
-                                          name   : $"{aspectRatio}")[0];
-
-            var screenCenterPosition 
-                = displayCompatibility
-                    .GetAllValues<string>(section: screenCompatibility,
-                                          name   : "Screen Center Position")[0];
-
-            return _ 
-                   = new PointF(x: float
-                                    .Parse(screenCenterPosition),
+            return _
+                   = new PointF(x: GTAScreen
+                                        .ScaledWidth / 2f,
                                 y: 0f);
         }
         internal PointF ReturnTheCustomPositionOfCenterOfScreen()
