@@ -7,6 +7,7 @@ using Autorotation_maneuver.user_interface.managers;
 
 namespace Autorotation_maneuver.user_interface
 {
+    [ScriptAttributes(NoDefaultInstance = true)]
     internal sealed class HelicopterBladesSpeed : Script
     {
         private Elements _elements;

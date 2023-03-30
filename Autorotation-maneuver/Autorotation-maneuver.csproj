@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ScriptHookVDotNet3">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\ScriptHookVDotNet3.dll</HintPath>
+    <Reference Include="ScriptHookVDotNet3, Version=3.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ScriptHookVDotNet3.3.6.0\lib\net48\ScriptHookVDotNet3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="script\AutorotationManeuver.cs" />
     <Compile Include="settings\Settings.cs" />
     <Compile Include="user-interface\creators\ContainerElementCreator.cs" />
     <Compile Include="user-interface\creators\CustomSpriteCreator.cs" />
@@ -52,6 +53,9 @@
     <Compile Include="user-interface\managers\ContainerElementManager.cs" />
     <Compile Include="user-interface\managers\CustomSpriteManager.cs" />
     <Compile Include="user-interface\managers\TextElementManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
