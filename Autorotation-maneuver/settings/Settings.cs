@@ -84,6 +84,37 @@ namespace Autorotation_maneuver.settings
             return interfaceVisibility;
         }
 
+        internal Boolean ReturnTheInterfaceDisplayBehavior()
+        {
+            var behaviorOfUserInterfaceElementsFile
+                = ScriptSettings
+                    .Load(PathToBehaviorOfUserInterfaceElementsFile);
+
+            var interfaceDiplayBehavior
+                = false;
+
+            var section
+                = "Display Only In Autorotation";
+
+            var key
+                = "_";
+
+            var value
+                = behaviorOfUserInterfaceElementsFile
+                    .GetAllValues<string>(section,
+                                          key)[0];
+
+            if (value != null
+                &&
+                value == "On")
+            {
+                interfaceDiplayBehavior
+                = true;
+            }
+
+            return interfaceDiplayBehavior;
+        }
+
         internal PointF ReturnThePositionOfCenterOfScreen()
         {
             var displayCompatibility 

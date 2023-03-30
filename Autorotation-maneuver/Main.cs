@@ -77,7 +77,7 @@ namespace Autorotation_maneuver
 
                             if (isTheHelicopterInFlight
                                     &&
-                                heliBladesSpeed < 1.05f)
+                                heliBladesSpeed < 1.00f)
                             {
                                 var controlVehicleFlyThrottleUpIsPressed 
                                     = Game
@@ -127,13 +127,8 @@ namespace Autorotation_maneuver
     
         private void IncreaseRotationOfHelicopterBladesBasedOn(float value)
         {
-            var playerCharacter 
-                = Game
-                    .Player
-                        .Character;
-
             var vehiclePlayer 
-                = playerCharacter
+                = _player
                     .CurrentVehicle;
 
             var vehicleSpeed 
