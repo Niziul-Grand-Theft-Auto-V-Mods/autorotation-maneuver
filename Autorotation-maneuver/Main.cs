@@ -1,6 +1,5 @@
 ﻿using GTA;
 
-
 namespace Autorotation_maneuver
 {
     internal sealed class Main : Script
@@ -9,123 +8,120 @@ namespace Autorotation_maneuver
 
         public Main()
         {
-            var isInLoading
-                = Game
-                    .IsLoading;
-
             Tick += (o, e) =>
             {
-                if (isInLoading)
+                if (Game.IsLoading)
                 {
-                    isInLoading
-                    = Game
-                        .IsLoading;
-
                     return;
                 }
-                else
+
+                if (_player == null)
                 {
-                    Start();
+                    _player
+                        = Game.Player.Character;
+                }
+
+                var playerIsInVehicleWithRotatingWings
+                    = _player
+                        .IsInHeli;
+
+                switch (playerIsInVehicleWithRotatingWings)
+                {
+                    case false:
+                        {
+                            return;
+                        }
+                    case true:
+                        {
+                            var vehiclePlayer
+                                = _player
+                                    .CurrentVehicle;
+
+                            var isEngineRunning
+                                = vehiclePlayer
+                                    .IsEngineRunning;
+
+                            if (isEngineRunning)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                var heliBladesSpeed
+                                    = vehiclePlayer
+                                        .HeliBladesSpeed;
+
+                                var isTheHelicopterInFlight
+                                    = vehiclePlayer
+                                        .IsInAir;
+
+
+                                if (isTheHelicopterInFlight
+                                        &&
+                                    heliBladesSpeed < 1.00f)
+                                {
+                                    var controlVehicleFlyThrottleUpIsPressed
+                                        = Game
+                                            .IsControlPressed(Control
+                                                                .VehicleFlyThrottleUp);
+
+                                    var controlVehicleFlyThrottleDownIsPressed
+                                        = Game
+                                            .IsControlPressed(Control
+                                                                .VehicleFlyThrottleDown);
+
+
+                                    if (!controlVehicleFlyThrottleUpIsPressed
+                                            &&
+                                        !controlVehicleFlyThrottleDownIsPressed)
+                                    {
+                                        SetRotationOfHelicopterBladesBasedOnThis(0.00050f);
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        switch (controlVehicleFlyThrottleDownIsPressed)
+                                        {
+                                            case true:
+                                                {
+                                                    var throttleDownValue
+                                                        = Game
+                                                            .GetControlValueNormalized(Control.VehicleFlyThrottleDown);
+
+                                                    var rate
+                                                        = (throttleDownValue / 10000f) + 0.00015f;
+
+                                                    SetRotationOfHelicopterBladesBasedOnThis(rate);
+                                                }
+                                                return;
+                                        }
+
+                                        switch (controlVehicleFlyThrottleUpIsPressed)
+                                        {
+                                            case true:
+                                                {
+                                                    var throttleUpValue
+                                                        = Game
+                                                            .GetControlValueNormalized(Control.VehicleFlyThrottleUp);
+
+                                                    var rate
+                                                        = throttleUpValue / 1000f;
+    
+                                                    SetRotationOfHelicopterBladesBasedOnThis(rate);
+                                                }
+                                                return;
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                        return;
                 }
             };
         }
 
-        private void Start()
-        {
-            if (_player == null)
-            {
-                _player
-                    = Game
-                        .Player
-                            .Character;
-            }
-
-            var playerIsInVehicleWithRotatingWings 
-                = _player
-                    .IsInHeli;
-
-            switch (playerIsInVehicleWithRotatingWings)
-            {
-                case false:
-                    {
-                        return;
-                    }
-                case true:
-                    {
-                        var vehiclePlayer 
-                            = _player
-                                .CurrentVehicle;
-
-                        var isEngineRunning 
-                            = vehiclePlayer
-                                .IsEngineRunning;
-
-                        if (isEngineRunning)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            var heliBladesSpeed 
-                                = vehiclePlayer
-                                    .HeliBladesSpeed;
-
-                            var isTheHelicopterInFlight 
-                                = vehiclePlayer
-                                    .IsInAir;
-
-
-                            if (isTheHelicopterInFlight
-                                    &&
-                                heliBladesSpeed < 1.00f)
-                            {
-                                var controlVehicleFlyThrottleUpIsPressed 
-                                    = Game
-                                        .IsControlPressed(Control
-                                                            .VehicleFlyThrottleUp);
-
-                                var controlVehicleFlyThrottleDownIsPressed 
-                                    = Game
-                                        .IsControlPressed(Control
-                                                            .VehicleFlyThrottleDown);
-
-
-                                if (!controlVehicleFlyThrottleUpIsPressed 
-                                        &&
-                                    !controlVehicleFlyThrottleDownIsPressed)
-                                {
-                                    IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00050f);
-                                    return;
-                                }
-                                else
-                                {
-                                    switch (controlVehicleFlyThrottleDownIsPressed)
-                                    {
-                                        case true:
-                                            {
-                                                IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00025f);
-                                            }
-                                            return;
-                                    }
-
-                                    switch (controlVehicleFlyThrottleUpIsPressed)
-                                    {
-                                        case true:
-                                            {
-                                                IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00100f);
-                                            }
-                                            return;
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                    return;
-            }
-        }
-    
-        private void IncreaseRotationOfHelicopterBladesBasedOn(float value)
+        private void SetRotationOfHelicopterBladesBasedOnThis(float rate)
         {
             var vehiclePlayer 
                 = _player
@@ -144,7 +140,7 @@ namespace Autorotation_maneuver
                 = verticalSpeed > 1.35f;
 
             vehiclePlayer
-                .HeliBladesSpeed += value - (isTheHelicopterGainingAltitude ? verticalSpeed / (vehicleSpeed * 5000) : verticalSpeed / 5000f);
+                .HeliBladesSpeed += rate - (isTheHelicopterGainingAltitude ? vehicleSpeed / (verticalSpeed * 10000f) : (verticalSpeed - (vehicleSpeed / 10000f)) / 10000f);
         }
     }
 }

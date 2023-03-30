@@ -27,81 +27,64 @@ namespace Autorotation_maneuver.user_interface
                 = settings
                     .ReturnTheInterfaceDisplayBehavior();
 
-            var isInLoading
-                = Game
-                    .IsLoading;
-
+            var character
+                = Game.Player.Character;
 
             Tick += (o, e) =>
             {
-                switch (isInLoading)
+                if (Game.IsLoading)
                 {
-                    case true:
-                        {
-                            isInLoading
-                            = Game
-                                .IsLoading;
-
-                            return;
-                        }
-                    case false:
-                        {
-                            var character
-                                = Game
-                                    .Player
-                                        .Character;
-
-                            var playerIsInVehicleWithRotatingWings
-                                = character
-                                        .IsInHeli;
-
-                            if (playerIsInVehicleWithRotatingWings)
-                            {
-                                var currentVehicle
-                                    = character
-                                        .CurrentVehicle;
-
-                                if (isToBeDisplayedOnlyInAutorotation 
-                                    &&
-                                    currentVehicle
-                                        .IsEngineRunning
-                                    ||
-                                    currentVehicle
-                                        .IsStopped
-                                    ||
-                                    !currentVehicle
-                                        .IsInAir
-                                    ||
-                                    character
-                                        .IsJumpingOutOfVehicle
-                                    ||
-                                    character
-                                        .IsGettingIntoVehicle
-                                    ||
-                                    !character
-                                        .IsSittingInVehicle()
-                                    )
-                                {
-                                    return;
-                                }
-
-                                if (_elements == null)
-                                    _elements 
-                                            = ReturnTheRequiredElementsForDisplayingTheInterface();
-
-                                _elements
-                                    .ScaledDraw((currentVehicle.HeliBladesSpeed * 100f)
-                                                                                    .ToString("N1"));
-
-                                return;
-                            }
-
-                            if (_elements != null)
-                                _elements 
-                                        = null;
-                        }
-                        return;
+                    return;
                 }
+
+                var playerIsInVehicleWithRotatingWings
+                    = character
+                            .IsInHeli;
+
+                if (playerIsInVehicleWithRotatingWings)
+                {
+                    var currentVehicle
+                        = character
+                            .CurrentVehicle;
+
+                    if (isToBeDisplayedOnlyInAutorotation
+                        &&
+                        currentVehicle
+                            .IsEngineRunning
+                        ||
+                        currentVehicle
+                            .IsStopped
+                        ||
+                        !currentVehicle
+                            .IsInAir
+                        ||
+                        character
+                            .IsJumpingOutOfVehicle
+                        ||
+                        character
+                            .IsGettingIntoVehicle
+                        ||
+                        !character
+                            .IsSittingInVehicle()
+                        )
+                    {
+                        return;
+                    }
+
+                    if (_elements == null)
+                        _elements
+                                = ReturnTheRequiredElementsForDisplayingTheInterface();
+
+                    _elements
+                        .ScaledDraw((currentVehicle.HeliBladesSpeed * 100f)
+                                                                        .ToString("N1"));
+
+                    return;
+                }
+
+                if (_elements != null)
+                    _elements
+                            = null;
             };
         }
 
