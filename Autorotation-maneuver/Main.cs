@@ -5,6 +5,8 @@ namespace Autorotation_maneuver
 {
     internal sealed class Main : Script
     {
+        private Ped _player;
+
         public Main()
         {
             var isInLoading
@@ -30,21 +32,28 @@ namespace Autorotation_maneuver
 
         private void Start()
         {
-            var player 
-                = Game
-                    .Player
-                        .Character;
+            if (_player == null)
+            {
+                _player
+                    = Game
+                        .Player
+                            .Character;
+            }
 
             var playerIsInVehicleWithRotatingWings 
-                = player
+                = _player
                     .IsInHeli;
 
             switch (playerIsInVehicleWithRotatingWings)
             {
+                case false:
+                    {
+                        return;
+                    }
                 case true:
                     {
                         var vehiclePlayer 
-                            = player
+                            = _player
                                 .CurrentVehicle;
 
                         var isEngineRunning 
@@ -68,7 +77,7 @@ namespace Autorotation_maneuver
 
                             if (isTheHelicopterInFlight
                                     &&
-                                heliBladesSpeed < 1.35f)
+                                heliBladesSpeed < 1.05f)
                             {
                                 var controlVehicleFlyThrottleUpIsPressed 
                                     = Game
@@ -88,24 +97,26 @@ namespace Autorotation_maneuver
                                     IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00050f);
                                     return;
                                 }
-
-
-                                switch (controlVehicleFlyThrottleUpIsPressed)
+                                else
                                 {
-                                    case true:
-                                        {
-                                            IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00100f);
-                                        }
-                                        return;
-                                }
-                                
-                                switch (controlVehicleFlyThrottleDownIsPressed)
-                                {
-                                    case true:
-                                        {
-                                            IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00100f);
-                                        }
-                                        return;
+                                    switch (controlVehicleFlyThrottleDownIsPressed)
+                                    {
+                                        case true:
+                                            {
+                                                IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00025f);
+                                            }
+                                            return;
+                                    }
+
+                                    switch (controlVehicleFlyThrottleUpIsPressed)
+                                    {
+                                        case true:
+                                            {
+                                                IncreaseRotationOfHelicopterBladesBasedOn(value: 0.00100f);
+                                            }
+                                            return;
+                                    }
+
                                 }
                             }
                         }
@@ -132,7 +143,7 @@ namespace Autorotation_maneuver
             var verticalSpeed 
                 = vehiclePlayer
                     .Velocity
-                            .Z;
+                        .Z;
 
             var isTheHelicopterGainingAltitude 
                 = verticalSpeed > 1.35f;

@@ -21,13 +21,15 @@ namespace Autorotation_maneuver.user_interface
             if (!interfaceVisibility)
                 Pause();
 
+            
+
             var elements 
                 = ReturnTheRequiredElementsForDisplayingTheInterface();
-
 
             var isInLoading
                 = Game
                     .IsLoading;
+
 
             Tick += (o, e) =>
             {

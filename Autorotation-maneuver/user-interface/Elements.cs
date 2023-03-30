@@ -29,7 +29,8 @@ namespace Autorotation_maneuver.user_interface
                 .ScaledDraw();
 
             _textElement
-                .Caption = textElementCaption;
+                .Caption 
+                 = textElementCaption;
 
             _textElement
                 .ScaledDraw();

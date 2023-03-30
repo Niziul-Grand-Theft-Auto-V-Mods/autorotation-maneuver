@@ -1,9 +1,10 @@
 ﻿using GTA;
 using GTA.UI;
 
+using System;
 using System.IO;
 using System.Drawing;
-using System;
+
 
 namespace Autorotation_maneuver.settings
 {
@@ -72,10 +73,12 @@ namespace Autorotation_maneuver.settings
                     .GetAllValues<string>(section,
                                           key)[0];
 
-            if (value != null)
+            if (value != null 
+                &&
+                value == "On")
             {
-                if (value == "On")
-                    interfaceVisibility = true;
+                interfaceVisibility
+                = true;
             }
 
             return interfaceVisibility;
@@ -113,7 +116,7 @@ namespace Autorotation_maneuver.settings
 
             return _
                    = new PointF(x: positionOfCenterOfScreen
-                                                       .X,
+                                                         .X,
                                 y: 680f);
         }
         
@@ -146,7 +149,7 @@ namespace Autorotation_maneuver.settings
             
         }
         
-        internal Color ReturnTheColorOfThisSection(string section)
+        internal Color ReturnTheColorOf(string section)
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings
