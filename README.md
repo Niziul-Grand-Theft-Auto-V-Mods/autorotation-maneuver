@@ -31,6 +31,11 @@
 <p><strong>Changelog</strong></p>
 
 <ul>
+	<li>[0.4.1.0]
+	<ul>
+		<li>Interface compatibility fix.&nbsp;</li>
+	</ul>
+	</li>
 	<li>[0.4.0.0]
 	<ul>
 		<li>More control over the generation and use of the blade rotations generated during the autorotation maneuver, this change is very noticeable to those who use joystick with depth triggers.</li>
@@ -64,4 +69,3 @@
 	</ul>
 	</li>
 </ul>
-
