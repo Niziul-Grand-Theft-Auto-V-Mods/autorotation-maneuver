@@ -1,14 +1,9 @@
 ﻿using GTA;
-
+using System;
+using System.Drawing;
+using System.IO;
 using GTAScreen
       = GTA.UI.Screen;
-
-using System;
-
-using System.IO;
-
-using System.Drawing;
-
 
 namespace Autorotation_maneuver.settings
 {
@@ -35,7 +30,7 @@ namespace Autorotation_maneuver.settings
                          @"\UserInterfaceResources\CustomSprite\DefaultLayout.png";
             }
         }
-        
+
         internal string PathToDisplayCompatibilityFile
         {
             get
@@ -46,6 +41,7 @@ namespace Autorotation_maneuver.settings
                          @"\UserInterfaceResources\DisplayCompatibility.ini";
             }
         }
+
         internal string PathToBehaviorOfUserInterfaceElementsFile
         {
             get
@@ -56,8 +52,8 @@ namespace Autorotation_maneuver.settings
                          @"\BehaviorOfUserInterfaceElements.ini";
             }
         }
-        
-        internal Boolean ReturnTheInterfaceVisibility()
+
+        internal Boolean GetInterfaceVisibility()
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings
@@ -67,7 +63,7 @@ namespace Autorotation_maneuver.settings
                 = false;
 
             var section
-                = "Interface Visibility";
+                = "InterfaceVisibility";
 
             var key
                 = "_";
@@ -88,7 +84,7 @@ namespace Autorotation_maneuver.settings
             return interfaceVisibility;
         }
 
-        internal Boolean ReturnTheInterfaceDisplayBehavior()
+        internal Boolean GetInterfaceDisplayBehavior()
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings
@@ -98,7 +94,7 @@ namespace Autorotation_maneuver.settings
                 = false;
 
             var section
-                = "Display Only In Autorotation";
+                = "DisplayOnlyInAutorotation";
 
             var key
                 = "_";
@@ -119,17 +115,17 @@ namespace Autorotation_maneuver.settings
             return interfaceDiplayBehavior;
         }
 
-        internal PointF ReturnThePositionOfCenterOfScreen()
+        internal PointF GetPositionOfCenterOfScreen()
         {
             return _
                    = new PointF(x: GTAScreen
                                         .ScaledWidth / 2f,
                                 y: 0f);
         }
-        internal PointF ReturnTheCustomPositionOfCenterOfScreen()
+        internal PointF GetCustomPositionOfCenterOfScreen()
         {
             var positionOfCenterOfScreen 
-                = ReturnThePositionOfCenterOfScreen();
+                = GetPositionOfCenterOfScreen();
 
             return _
                    = new PointF(x: positionOfCenterOfScreen
@@ -137,7 +133,7 @@ namespace Autorotation_maneuver.settings
                                 y: 680f);
         }
         
-        internal SizeF ReturnTheSizeOfTheDefaultLayoutImage()
+        internal SizeF GetSizeOfTheDefaultLayoutImage()
         {
             var sizeOfDefaultLayoutImage 
                 = new SizeF();
@@ -153,10 +149,10 @@ namespace Autorotation_maneuver.settings
 
             return sizeOfDefaultLayoutImage;
         }
-        internal SizeF ReturnTheCustomSizeOfTheDefaultLayoutImage()
+        internal SizeF GetCustomSizeOfTheDefaultLayoutImage()
         {
             var sizeOfDefaultLayoutImage
-                = ReturnTheSizeOfTheDefaultLayoutImage();
+                = GetSizeOfTheDefaultLayoutImage();
 
             return _
                    = new SizeF(width: sizeOfDefaultLayoutImage
@@ -166,7 +162,7 @@ namespace Autorotation_maneuver.settings
             
         }
         
-        internal Color ReturnTheColorOf(string section)
+        internal Color GetColorOf(string section)
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings

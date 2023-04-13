@@ -14,15 +14,15 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var customPosition 
                 = settings
-                    .ReturnTheCustomPositionOfCenterOfScreen();
+                    .GetCustomPositionOfCenterOfScreen();
 
             var customSize 
                 = settings
-                    .ReturnTheCustomSizeOfTheDefaultLayoutImage();
+                    .GetCustomSizeOfTheDefaultLayoutImage();
 
             var color
                 = settings
-                    .ReturnTheColorOf("Custom Sprite");
+                    .GetColorOf("CustomSprite");
 
             return _
                    = new CustomSprite(filename: settings

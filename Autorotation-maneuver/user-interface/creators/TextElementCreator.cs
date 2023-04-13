@@ -19,7 +19,7 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var customPosition 
                 = settings
-                    .ReturnTheCustomPositionOfCenterOfScreen();
+                    .GetCustomPositionOfCenterOfScreen();
 
             var offsetPosition
                 = new PointF(x: customPosition
@@ -29,7 +29,7 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var color
                 = settings
-                    .ReturnTheColorOf("Text Element");
+                    .GetColorOf("TextElement");
 
             return _ 
                    = new TextElement(caption : string
