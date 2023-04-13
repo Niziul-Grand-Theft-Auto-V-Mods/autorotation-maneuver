@@ -31,17 +31,6 @@ namespace Autorotation_maneuver.settings
             }
         }
 
-        internal string PathToDisplayCompatibilityFile
-        {
-            get
-            {
-                return _
-                       = PathToTheAutorotationManeuverFolder
-                         +
-                         @"\UserInterfaceResources\DisplayCompatibility.ini";
-            }
-        }
-
         internal string PathToBehaviorOfUserInterfaceElementsFile
         {
             get
