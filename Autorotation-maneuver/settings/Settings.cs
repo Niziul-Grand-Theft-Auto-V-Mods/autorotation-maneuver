@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Autorotation_maneuver.main_resources.enumerators;
+using GTA;
 using System;
 using System.Drawing;
 using System.IO;
@@ -31,6 +32,17 @@ namespace Autorotation_maneuver.settings
             }
         }
 
+        internal string PathToScriptBehaviorFile
+        {
+            get
+            {
+                return _
+                       = PathToTheAutorotationManeuverFolder
+                         +
+                         @"\ScriptBehavior.ini";
+            }
+        }
+
         internal string PathToBehaviorOfUserInterfaceElementsFile
         {
             get
@@ -41,6 +53,27 @@ namespace Autorotation_maneuver.settings
                          @"\BehaviorOfUserInterfaceElements.ini";
             }
         }
+
+        internal EManeuverDifficulty GetManeuverDifficulty()
+        {
+            var scriptBehaviorFile
+                = ScriptSettings
+                    .Load(PathToScriptBehaviorFile);
+
+            var section
+                = "ManeuverDifficulty";
+
+            var key
+                = "_";
+
+            var value
+                = scriptBehaviorFile
+                    .GetAllValues<int>(section,
+                                          key)[0];
+
+            return (EManeuverDifficulty)value;
+        }
+
 
         internal Boolean GetInterfaceVisibility()
         {
