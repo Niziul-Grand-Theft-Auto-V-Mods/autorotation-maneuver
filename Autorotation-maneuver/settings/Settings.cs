@@ -42,7 +42,6 @@ namespace Autorotation_maneuver.settings
                          @"\ScriptBehavior.ini";
             }
         }
-
         internal string PathToBehaviorOfUserInterfaceElementsFile
         {
             get
@@ -69,11 +68,10 @@ namespace Autorotation_maneuver.settings
             var value
                 = scriptBehaviorFile
                     .GetAllValues<int>(section,
-                                          key)[0];
+                                       key)[0];
 
             return (EManeuverDifficulty)value;
         }
-
 
         internal Boolean GetInterfaceVisibility()
         {
@@ -105,7 +103,6 @@ namespace Autorotation_maneuver.settings
 
             return interfaceVisibility;
         }
-
         internal Boolean GetInterfaceDisplayBehavior()
         {
             var behaviorOfUserInterfaceElementsFile
