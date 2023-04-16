@@ -19,14 +19,14 @@ namespace Autorotation_maneuver.user_interface
 
             var interfaceVisibility
                 = settings
-                    .ReturnTheInterfaceVisibility();
+                    .GetInterfaceVisibility();
 
             if (!interfaceVisibility)
                 Pause();
 
             var isToBeDisplayedOnlyInAutorotation
                 = settings
-                    .ReturnTheInterfaceDisplayBehavior();
+                    .GetInterfaceDisplayBehavior();
 
             var character
                 = Game.Player.Character;

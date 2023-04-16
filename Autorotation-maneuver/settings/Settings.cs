@@ -1,14 +1,10 @@
-﻿using GTA;
-
+﻿using Autorotation_maneuver.main_resources.enumerators;
+using GTA;
+using System;
+using System.Drawing;
+using System.IO;
 using GTAScreen
       = GTA.UI.Screen;
-
-using System;
-
-using System.IO;
-
-using System.Drawing;
-
 
 namespace Autorotation_maneuver.settings
 {
@@ -35,15 +31,15 @@ namespace Autorotation_maneuver.settings
                          @"\UserInterfaceResources\CustomSprite\DefaultLayout.png";
             }
         }
-        
-        internal string PathToDisplayCompatibilityFile
+
+        internal string PathToScriptBehaviorFile
         {
             get
             {
                 return _
                        = PathToTheAutorotationManeuverFolder
                          +
-                         @"\UserInterfaceResources\DisplayCompatibility.ini";
+                         @"\ScriptBehavior.ini";
             }
         }
         internal string PathToBehaviorOfUserInterfaceElementsFile
@@ -56,8 +52,28 @@ namespace Autorotation_maneuver.settings
                          @"\BehaviorOfUserInterfaceElements.ini";
             }
         }
-        
-        internal Boolean ReturnTheInterfaceVisibility()
+
+        internal EManeuverDifficulty GetManeuverDifficulty()
+        {
+            var scriptBehaviorFile
+                = ScriptSettings
+                    .Load(PathToScriptBehaviorFile);
+
+            var section
+                = "ManeuverDifficulty";
+
+            var key
+                = "_";
+
+            var value
+                = scriptBehaviorFile
+                    .GetAllValues<int>(section,
+                                       key)[0];
+
+            return (EManeuverDifficulty)value;
+        }
+
+        internal Boolean GetInterfaceVisibility()
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings
@@ -67,7 +83,7 @@ namespace Autorotation_maneuver.settings
                 = false;
 
             var section
-                = "Interface Visibility";
+                = "InterfaceVisibility";
 
             var key
                 = "_";
@@ -87,8 +103,7 @@ namespace Autorotation_maneuver.settings
 
             return interfaceVisibility;
         }
-
-        internal Boolean ReturnTheInterfaceDisplayBehavior()
+        internal Boolean GetInterfaceDisplayBehavior()
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings
@@ -98,7 +113,7 @@ namespace Autorotation_maneuver.settings
                 = false;
 
             var section
-                = "Display Only In Autorotation";
+                = "DisplayOnlyInAutorotation";
 
             var key
                 = "_";
@@ -119,17 +134,17 @@ namespace Autorotation_maneuver.settings
             return interfaceDiplayBehavior;
         }
 
-        internal PointF ReturnThePositionOfCenterOfScreen()
+        internal PointF GetPositionOfCenterOfScreen()
         {
             return _
                    = new PointF(x: GTAScreen
                                         .ScaledWidth / 2f,
                                 y: 0f);
         }
-        internal PointF ReturnTheCustomPositionOfCenterOfScreen()
+        internal PointF GetCustomPositionOfCenterOfScreen()
         {
             var positionOfCenterOfScreen 
-                = ReturnThePositionOfCenterOfScreen();
+                = GetPositionOfCenterOfScreen();
 
             return _
                    = new PointF(x: positionOfCenterOfScreen
@@ -137,7 +152,7 @@ namespace Autorotation_maneuver.settings
                                 y: 680f);
         }
         
-        internal SizeF ReturnTheSizeOfTheDefaultLayoutImage()
+        internal SizeF GetSizeOfTheDefaultLayoutImage()
         {
             var sizeOfDefaultLayoutImage 
                 = new SizeF();
@@ -153,10 +168,10 @@ namespace Autorotation_maneuver.settings
 
             return sizeOfDefaultLayoutImage;
         }
-        internal SizeF ReturnTheCustomSizeOfTheDefaultLayoutImage()
+        internal SizeF GetCustomSizeOfTheDefaultLayoutImage()
         {
             var sizeOfDefaultLayoutImage
-                = ReturnTheSizeOfTheDefaultLayoutImage();
+                = GetSizeOfTheDefaultLayoutImage();
 
             return _
                    = new SizeF(width: sizeOfDefaultLayoutImage
@@ -166,7 +181,7 @@ namespace Autorotation_maneuver.settings
             
         }
         
-        internal Color ReturnTheColorOf(string section)
+        internal Color GetColorOf(string section)
         {
             var behaviorOfUserInterfaceElementsFile
                 = ScriptSettings

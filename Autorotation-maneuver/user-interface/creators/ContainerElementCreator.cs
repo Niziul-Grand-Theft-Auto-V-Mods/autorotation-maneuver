@@ -16,7 +16,7 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var customPosition 
                 = settings
-                    .ReturnTheCustomPositionOfCenterOfScreen();
+                    .GetCustomPositionOfCenterOfScreen();
 
             var offsetPosition
                 = new PointF(x: customPosition
@@ -26,7 +26,7 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var customSize 
                 = settings
-                    .ReturnTheCustomSizeOfTheDefaultLayoutImage();
+                    .GetCustomSizeOfTheDefaultLayoutImage();
 
             var offsetSize
                 = new SizeF(width : customSize
@@ -36,7 +36,7 @@ namespace Autorotation_maneuver.user_interface.creators
 
             var color
                 = settings
-                    .ReturnTheColorOf("Container Element");
+                    .GetColorOf("ContainerElement");
 
             return _ 
                    = new ContainerElement(position: offsetPosition,
